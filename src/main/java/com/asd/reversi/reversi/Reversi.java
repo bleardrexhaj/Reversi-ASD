@@ -9,6 +9,7 @@ import com.asd.reversi.reversi.util.Helper;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Component
 public class Reversi {
@@ -23,6 +24,15 @@ public class Reversi {
         return reversiBoard;
     }
 
+    public List<Player> registerPlayerAsResult(String username) {
+        if (reversiBoard.getPlayerFactory().getPlayers().size() == 0) {
+            reversiBoard.getPlayerFactory().createPlayer("human",username,1);
+        } else if (reversiBoard.getPlayerFactory().getPlayers().size() == 1) {
+            reversiBoard.getPlayerFactory().createPlayer("computer",username,-1);
+        }
+        return reversiBoard.getPlayerFactory().getPlayers();
+    }
+
     public void startGame() {
         if (reversiBoard.isFinished()) {
             reversiBoard.reset();
@@ -31,14 +41,14 @@ public class Reversi {
     }
 
     public ReversiBoard move(MoveDetails details) throws Exception {
+        if (details.getX() != -5 && details.getY() != -5) { // Error Check Temporarily
         if (!isItPlayersTurn(details)) {
             throw new Exception("It's not your turn");
         }
         if (!isMoveValid(details)) {
             throw new Exception("It's not a valid movement");
         }
-
-        Helper.doMove(reversiBoard.getBoard(), details);
+            Helper.doMove(reversiBoard.getBoard(), details);
         if (!Helper.isGameFinished(reversiBoard.getBoard())) {
             setTurn(details);
             reversiBoard.setNext(Helper.calcNextMoves(reversiBoard.getBoard() ,reversiBoard.getTurn()));
@@ -51,7 +61,7 @@ public class Reversi {
         if(reversiBoard.getPlayerFactory().getPlayers().get(1).getName().equalsIgnoreCase("computer") && reversiBoard.getTurn() == -1){
             move(generateComputerMove());
         }
-
+        }
         return reversiBoard;
     }
 
@@ -76,8 +86,11 @@ public class Reversi {
                 {13, 50, 66, 0, 121, 986},
                 {4, 50, 31, 0, 27, 192},
                 {8, 500, 77, 0, 36, 299}}, new int[] {0, 55, 56, 57, 58, 59, 60, 61, 62, 63}));
-        details.setPlayer(-1);
-        //setTurn(details);
+        //Move Checking
+        if(details == null) { details = new MoveDetails(-5,-5,-1);}
+            if (details.getX() == -5 && details.getY() == -5) {
+                    setTurn(details);
+            }
         return details;
     }
 
