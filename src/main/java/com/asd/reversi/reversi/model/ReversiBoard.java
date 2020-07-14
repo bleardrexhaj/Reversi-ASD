@@ -30,8 +30,7 @@ public class ReversiBoard extends BoardModel{
     }
 
     public static ReversiBoard getInstance() {
-    	singletonPlayRoom single =  singletonPlayRoom.INSTANCE;
-    	return single.getPlayroom();
+    	return SingletonPlayRoom.getPlayroom();
     }
 
     public PlayerFactory getPlayerFactory() {
@@ -39,7 +38,9 @@ public class ReversiBoard extends BoardModel{
     }
 
     public Player getPlayerA(){
-        return getPlayerFactory().getPlayers().get(0);
+        if (getPlayerFactory().getPlayers().size() > 0)
+            return getPlayerFactory().getPlayers().get(0);
+        return null;
     }
 
     public Player getPlayerB(){
@@ -52,5 +53,8 @@ public class ReversiBoard extends BoardModel{
         this.state = state;
         this.setWinner(state.checkWinOrDraw());
     }
+
+//    private void setWinner(String checkWinOrDraw) {
+//    }
 
 }
