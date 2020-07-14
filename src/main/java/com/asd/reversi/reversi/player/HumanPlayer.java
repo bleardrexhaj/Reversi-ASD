@@ -1,11 +1,14 @@
 package com.asd.reversi.reversi.player;
 
+import com.asd.reversi.visitor.Accept;
+import com.asd.reversi.visitor.Visitor;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class HumanPlayer implements Player{
+public class HumanPlayer implements Player,Accept{
 
     private String name;
     private int flag;
@@ -25,4 +28,10 @@ public class HumanPlayer implements Player{
     public int getFlag() {
         return flag;
     }
+
+	@Override
+	public void accept(Visitor visitor) {
+		visitor.visitClass(this);
+		
+	}
 }
