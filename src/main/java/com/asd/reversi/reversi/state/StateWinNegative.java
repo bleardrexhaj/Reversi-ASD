@@ -1,6 +1,9 @@
 package com.asd.reversi.reversi.state;
 
-public class StateWinNegative implements IState  {
+import com.asd.reversi.visitor.Accept;
+import com.asd.reversi.visitor.Visitor;
+
+public class StateWinNegative implements IState,Accept  {
 	private static final long serialVersionUID = 1L;
 	private String  status="Negative Win";
 
@@ -17,6 +20,13 @@ public class StateWinNegative implements IState  {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+
+	@Override
+	public void accept(Visitor visitor) {
+		visitor.visitClass(this);
+		
 	}
 
 }

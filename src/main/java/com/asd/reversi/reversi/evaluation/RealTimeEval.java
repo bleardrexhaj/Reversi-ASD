@@ -2,6 +2,7 @@ package com.asd.reversi.reversi.evaluation;
 
 import com.asd.reversi.reversi.model.MoveDetails;
 import com.asd.reversi.reversi.util.Helper;
+import com.asd.reversi.visitor.Visitor;
 
 import java.util.ArrayList;
 
@@ -152,4 +153,5 @@ public class RealTimeEval implements Evaluator {
 
             return 0;
         }
+
 }

@@ -3,10 +3,12 @@ package com.asd.reversi.reversi.player;
 import com.asd.reversi.reversi.evaluation.Evaluator;
 import com.asd.reversi.reversi.model.MoveDetails;
 import com.asd.reversi.reversi.util.Helper;
+import com.asd.reversi.visitor.Accept;
+import com.asd.reversi.visitor.Visitor;
 
 import java.util.ArrayList;
 
-public class ComputerPlayer implements Player {
+public class ComputerPlayer implements Player,Accept {
 
     private static int nodesExplored;
     private String name;
@@ -222,4 +224,10 @@ public class ComputerPlayer implements Player {
         }
         return score;
     }
+
+	@Override
+	public void accept(Visitor visitor) {
+		visitor.visitClass(this);
+		
+	}
 }
